@@ -9,19 +9,20 @@ layout: base
 
   {{ content }}
 
-  {%- assign events = site.pages | where: "layout", "event" -%}
+  {%- assign events = site.pages | where: "layout", "default" -%}
   {%- if events.size > 0 -%}
     <h2 class="event-list-heading">Events</h2>
     <div class="events-grid">
       {%- for event in events -%}
-        <div class="event-card">
-          <h3>{{ event.title }}</h3>
-          <p>{{ event.description }}</p>
-          <button onclick="openModal('{{ event.url | relative_url }}')">View Presentation</button>
-          <a href="{{ event.url | relative_url }}" class="btn btn-download" download>
-            <i class="fas fa-download"></i> Download Materials
-          </a>
-        </div>
+        {%- if event.path contains "events/" -%}
+          <div class="event-card">
+            <h3>{{ event.title }}</h3>
+            <p>{{ event.description }}</p>
+            <a href="{{ event.url | relative_url }}" class="btn btn-download">
+              <i class="fas fa-download"></i> View Event Details
+            </a>
+          </div>
+        {%- endif -%}
       {%- endfor -%}
     </div>
   {%- else -%}
